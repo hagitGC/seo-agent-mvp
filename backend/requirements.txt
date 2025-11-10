@@ -15,7 +15,7 @@ httpx==0.25.2
 
 # SEO Analysis Tools
 advertools==0.15.0
-python-sitemap==1.1.0
+# Note: Sitemap parsing will use beautifulsoup4 and httpx (already included)
 
 # AI - Google Gemini (FREE tier)
 google-generativeai==0.3.2
