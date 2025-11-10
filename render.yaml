@@ -1,0 +1,44 @@
+# Render deployment configuration for SEO Agent MVP
+# 100% FREE tier deployment
+
+services:
+  # Backend API Service
+  - type: web
+    name: seo-agent-api
+    runtime: python
+    plan: free  # $0/month
+    region: oregon  # Choose closest to your users
+    buildCommand: pip install -r backend/requirements.txt && playwright install chromium
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: PLAYWRIGHT_BROWSERS_PATH
+        value: /opt/render/.cache/ms-playwright
+      - key: GEMINI_API_KEY
+        sync: false  # Set in Render dashboard
+      - key: FRONTEND_URL
+        sync: false  # Set in Render dashboard
+      - key: DEBUG
+        value: False
+      - key: MAX_REQUESTS_PER_15MIN
+        value: 5
+      - key: MAX_PAGES_PER_SITE
+        value: 50
+      - key: TEMP_FILE_RETENTION_HOURS
+        value: 24
+    healthCheckPath: /health
+    
+  # Frontend Service (Optional - can also deploy on Vercel)
+  # - type: web
+  #   name: seo-agent-frontend
+  #   runtime: node
+  #   plan: free
+  #   buildCommand: cd frontend && npm install && npm run build
+  #   startCommand: cd frontend && npm start
+  #   envVars:
+  #     - key: NEXT_PUBLIC_API_URL
+  #       fromService:
+  #         name: seo-agent-api
+  #         type: web
+  #         property: host
