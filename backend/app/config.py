@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = "http://localhost:3000"
     
     # Google Gemini API (FREE tier)
-    GEMINI_API_KEY: str
+    GEMINI_API_KEY: str = "not-set"  # Will be required later, but optional for testing
     GEMINI_PRIMARY_MODEL: str = "gemini-1.5-flash"
     GEMINI_PRIMARY_DAILY_LIMIT: int = 1500
     GEMINI_FALLBACK_MODEL: str = "gemini-1.5-pro"
